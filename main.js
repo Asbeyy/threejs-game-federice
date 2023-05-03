@@ -10,7 +10,7 @@ const renderer = new THREE.WebGLRenderer({
   alpha: true,
 });
 renderer.setSize( window.innerWidth, window.innerHeight)
-renderer.setClearColor(0xcccfff, 0.5);
+renderer.setClearColor(0xcccfff, 0.5); //0xcccfff
 // Set up the renderer for shadows
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
@@ -31,9 +31,9 @@ document.body.appendChild( renderer.domElement )
 
 
 //Floor
-const geometry = new THREE.PlaneGeometry(10,10)
+const geometry = new THREE.PlaneGeometry(100,100)
 const material = new THREE.MeshStandardMaterial({ 
-  color: 0xffce3,
+  color: 0xffffff,
   metalness: 1,
   roughness: 1,
 
@@ -95,7 +95,7 @@ light.target.position.set(-5, 0, 0);
 light.castShadow = true;
 light.shadow.bias = 0;
 
-light.shadow.camera.near = 0.1;
+light.shadow.camera.near = 1.10;
 light.shadow.camera.far = 10;
 light.shadow.camera.left = -10;
 light.shadow.camera.right = 10;
