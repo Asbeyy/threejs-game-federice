@@ -19,7 +19,7 @@ body{
 }
 
 .homepage{
-  height: calc(100vh - 110px);
+  height: calc(100vh - 105px);
   overflow: none;
 }
 
