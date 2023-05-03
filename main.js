@@ -10,7 +10,7 @@ const renderer = new THREE.WebGLRenderer({
   alpha: true,
 });
 renderer.setSize( window.innerWidth, window.innerHeight)
-renderer.setClearColor(0xcccfff, 0.5); //0xcccfff
+renderer.setClearColor(0xffffff, 0.5); //0xcccfff
 // Set up the renderer for shadows
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
@@ -62,7 +62,7 @@ camera.position.y = 2.5
 //Cube
 const cubeGeometry = new THREE.BoxGeometry(1,2,1)
 const cubeMaterial= new THREE.MeshStandardMaterial({ 
-  color: 0xfffffc,
+  color: 0xcccfff,
   metalness: 1,
   roughness: 1,
  });
@@ -133,9 +133,12 @@ loader.load(
   '/public/paper_yacht/scene.gltf',
   function (gltf) {
     const object = gltf.scene;
-    object.position.set( 0, -0.2, 0)
+    object.position.set( -2, -0.04, 0)
     object.castShadow = true
     object.receiveShadow = true
+    object.scale.x = 0.5
+    object.scale.y = 0.5
+    object.scale.z = 0.5
     scene.add(object);
   },
 
