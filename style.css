@@ -70,6 +70,22 @@ body{
   box-shadow: black 3px 3px 10px;
 }
 
+.test-float{
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  width: 170px;
+  height: 70px;
+  background-color: rgba(0, 0, 0, 0.641);
+  border-radius: 20px;
+  color: white;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
+  text-align: center;
+}
+
+
+
 
 
 

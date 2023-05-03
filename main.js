@@ -1,5 +1,7 @@
 import * as THREE from 'three'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
+import { CSS2DRenderer, CSS2DObject } from 'three/addons/renderers/CSS2DRenderer.js';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import * as TWEEN from '@tweenjs/tween.js'
 
 
@@ -126,6 +128,18 @@ scene.add(light3);
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
 // 3D Model
 const loader = new GLTFLoader();
 
@@ -139,13 +153,157 @@ loader.load( '/juice-carton/scene.gltf', function (gltf) {
     object.scale.y = 1.5
     object.scale.z = 1.5
     scene.add(object);
+
+
+      //RayCaster for Clicks
+  // Add event listener for mouse clicks
+  document.body.addEventListener("click", onObjectClick);
+  
+  // Function to handle mouse clicks on the object
+  function onObjectClick(event) {
+    //console.log("click on canvas")
+
+  // Get the mouse coordinates relative to the renderer canvas
+  const x = event.clientX;
+  const y = event.clientY;
+
+  // Use THREE.Raycaster to detect clicks on the object
+  const raycaster = new THREE.Raycaster();
+  const mouse = new THREE.Vector2();
+  mouse.x = (x / window.innerWidth) * 2 - 1;
+  mouse.y = -(y / window.innerHeight) * 2 + 1;
+  raycaster.setFromCamera(mouse, camera);
+  const intersects = raycaster.intersectObject(object);
+
+  // If the click intersects with the object, log "OK" to the console
+  if (intersects.length > 0) {
+    console.log("OK");
+    //handleFloater() //(on/off based on state)
+    //clickDialog()
+    autoDialog()
+    
+  }
+}
+  //END OF RAYCAST
   },
 
   // called when loading has errors
-  // function (error) {
-  //   console.error(error);
-  // }
+    // function (error) {
+    //   console.error(error);
+    // }
 );
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//TEXT3D
+const labelRenderer = new CSS2DRenderer();
+labelRenderer.setSize(window.innerWidth, window.innerHeight);
+labelRenderer.domElement.style.position = 'absolute';
+labelRenderer.domElement.style.top = '0px'
+labelRenderer.domElement.style.pointerEvents = 'none'
+labelRenderer.domElement.className = 'LMAO'
+labelRenderer.domElement.id = 'LMAO'
+document.body.appendChild(labelRenderer.domElement)
+
+
+
+
+
+
+const p = document.createElement('p');
+p.innerHTML = '<div class=""> Benvenuto nel mio Sito, Umano! </div>'
+p.className = 'test-float'
+p.id = "test-float"
+// const cPointLabel = new CSS2DObject(p)
+// scene.add(cPointLabel)
+// cPointLabel.position.set(0,2,0)
+
+const div = document.createElement('div');
+div.appendChild(p)
+const divContainer = new CSS2DObject(div)
+scene.add(divContainer)
+divContainer.position.set(0,2,0)
+
+
+
+let state = 1
+function clickDialog(){
+  
+  if (state === 1){
+    document.getElementById("test-float").style.display = "flex"
+  } else if ( state === 2){
+    p.innerHTML = '<div class=""> Questo e un progetto svilupato in Three.Js da Federico Lacchini </div>'
+  }else if ( state === 3){
+    p.innerHTML = '<div class=""> Hai paura di un coniglio che parla? </div>'
+  } else if ( state === 4){
+    p.innerHTML = '<div class=""> Avvicinati pure... </div>'
+  } else if ( state === 5){
+    p.innerHTML = '<div class=""> Non mangio! </div>'
+  } else if ( state === 6){
+    document.getElementById("test-float").style.display = "none"
+    state = 1
+  }
+    //document.getElementById("test-float").style.display = "none"
+  state = state + 1
+}
+
+
+let clickC = false
+function autoDialog(){
+  if (clickC === false){
+    clickC = true 
+    document.getElementById("test-float").style.display = "flex"
+    setTimeout(()=>{
+      p.innerHTML = '<div class=""> Questo e un progetto svilupato in Three.Js da Federico Lacchini </div>'
+      setTimeout(()=>{
+        p.innerHTML = '<div class=""> Hai paura di un coniglio che parla? </div>'
+        setTimeout(()=>{
+          p.innerHTML = '<div class=""> Fai bene... </div>'
+          setTimeout(()=>{
+            p.innerHTML = '<div class=""> Siamo carini e coccolosi, la probilita di essere uccisi da un coniglio e molto bassa </div>'
+            setTimeout(()=>{
+              p.innerHTML = '<div class=""> Ma non e mai 0.. </div>'
+              setTimeout(()=>{
+                document.getElementById("test-float").style.display = "none"
+                clickC = false
+              },2000)
+            },4000)
+          },2000)
+        },2000)
+      },2000)
+    },2000)
+
+  } else {
+    return 
+  }
+
+  
+  
+  
+  
+}
+
 
 
 
@@ -162,27 +320,25 @@ loader.load( '/juice-carton/scene.gltf', function (gltf) {
 function handleKeyPress(event) {
   const step = 1;
   switch (event.key) {
-    case "ArrowUp":
+    case "w":
       moveCube({ z: cube.position.z - step });
       moveCam({ z: camera.position.z - step });
       break;
-    case "ArrowDown":
+    case "s":
       moveCube({ z: cube.position.z + step });
       moveCam({ z: camera.position.z + step });
       break;
-    case "ArrowLeft":
+    case "a":
       moveCube({ x: cube.position.x - step });
       moveCam({ x: camera.position.x - step });
       break;
-    case "ArrowRight":
+    case "d":
       moveCube({ x: cube.position.x + step });
       moveCam({ x: camera.position.x + step });
       break;
     case " ":
       if (cube.position.y === 1) {
-        console.log("il cubo e a terra puoi saltare")
         jumpCube()
-        
 
       }
 
@@ -229,6 +385,16 @@ window.addEventListener("keydown", handleKeyPress);
 
 
 
+function handleFloater(){
+  if (document.getElementById("test-float").style.display === "none"){
+    document.getElementById("test-float").style.display = "flex"
+  } else {
+    document.getElementById("test-float").style.display = "none"
+
+  }
+}
+
+
 
 
 
@@ -263,6 +429,17 @@ window.addEventListener("keydown", handleKeyPress);
       .start();
   }
 
+
+
+
+
+
+
+
+
+
+
+
   // Jump Function
   function jumpCube() {
     const jumpHeight = 1; // Set the jump height to 1 unit
@@ -282,13 +459,25 @@ window.addEventListener("keydown", handleKeyPress);
 
 
 
+
+
+
+
+
+
   // Animation Loop
   function animate(){
     requestAnimationFrame( animate )
+
     cube.rotation.y += 0.05
+
     TWEEN.update()
+
     updateCamera()
+    
     renderer.render ( scene, camera )
+
+    labelRenderer.render(scene,camera)
   }
 
   animate();
