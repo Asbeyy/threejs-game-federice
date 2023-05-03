@@ -129,16 +129,15 @@ scene.add(light3);
 // 3D Model
 const loader = new GLTFLoader();
 
-loader.load(
-  '/public/paper_yacht/scene.gltf',
-  function (gltf) {
+loader.load( '/juice-carton/scene.gltf', function (gltf) {
     const object = gltf.scene;
-    object.position.set( -2, -0.04, 0)
+    object.position.set( -1.5, -0.0, -2.5)
+    object.rotation.y = -1
     object.castShadow = true
     object.receiveShadow = true
-    object.scale.x = 0.5
-    object.scale.y = 0.5
-    object.scale.z = 0.5
+    object.scale.x = 1.5
+    object.scale.y = 1.5
+    object.scale.z = 1.5
     scene.add(object);
   },
 
