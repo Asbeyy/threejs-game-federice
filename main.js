@@ -129,7 +129,7 @@ scene.add(light3);
 // 3D Model
 const loader = new GLTFLoader();
 
-loader.load( '/juice-carton/scene.gltf', function (gltf) {
+loader.load( '/public/juice-carton/scene.gltf', function (gltf) {
     const object = gltf.scene;
     object.position.set( -1.5, -0.0, -2.5)
     object.rotation.y = -1
