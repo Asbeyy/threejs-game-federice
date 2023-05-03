@@ -15,7 +15,7 @@ body{
   left: 0;
   display: flex;
   flex-direction: column;
-  background-color: rgba(0, 255, 255, 0.319);
+  background-color: rgba(0, 255, 255, 0.091);
 }
 
 .homepage{
